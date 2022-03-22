@@ -2,6 +2,19 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+contract CampaignFactory {
+    address[] public deployedCampaigns;
+
+    function createCampaign() public {
+        address newCampaign = address(new Campaign(msg.sender));
+        deployedCampaigns.push(newCampaign);
+    }
+
+    function getDeployedCampaigns() public view returns (address[] memory) {
+        return deployedCampaigns;
+    }
+}
+
 contract Campaign {
     struct Request {
         string description;
@@ -20,8 +33,8 @@ contract Campaign {
     mapping(address => bool) boardOfGov;
     mapping(address => uint256) memberContributions;
 
-    constructor() {
-        manager = msg.sender;
+    constructor(address creator) {
+        manager = creator;
     }
 
     modifier isManager() {
