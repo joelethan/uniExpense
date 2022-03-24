@@ -5,11 +5,6 @@ pragma solidity ^0.4.17;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
-    uint256 public balance;
-
-    constructor() {
-        balance = 1000;
-    }
 
     function createCampaign() public {
         address newCampaign = address(new Campaign(msg.sender));
@@ -48,7 +43,7 @@ contract Campaign {
         _;
     }
 
-    function constractBalance() public view returns (uint256) {
+    function contractBalance() public view returns (uint256) {
         return address(this).balance;
     }
 
