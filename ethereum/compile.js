@@ -9,23 +9,7 @@ const campaignPath = path.resolve(__dirname, "contracts", "Campaign.sol");
 
 const source = fs.readFileSync(campaignPath, "utf8");
 
-var input = JSON.stringify({
-  language: "Solidity",
-  sources: {
-    "Campaign.sol": {
-      content: source,
-    },
-  },
-  settings: {
-    outputSelection: {
-      "*": {
-        "*": ["*"],
-      },
-    },
-  },
-});
-
-const output = JSON.parse(solc.compile(input)).contracts["Campaign.sol"];
+const output = solc.compile(source, 1).contracts;
 
 fs.ensureDirSync(buildPath);
 

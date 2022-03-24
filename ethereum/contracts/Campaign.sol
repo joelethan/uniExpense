@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.7.0 <0.9.0;
+// pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.4.17;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
+    uint256 public balance;
+
+    constructor() {
+        balance = 1000;
+    }
 
     function createCampaign() public {
         address newCampaign = address(new Campaign(msg.sender));
@@ -108,7 +114,7 @@ contract Campaign {
             request.value < address(this).balance,
             "Not enough funds on the contract"
         );
-        payable(request.recipient).transfer(request.value);
+        request.recipient.transfer(request.value);
         request.complete = true;
     }
 }
