@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0
 
-// pragma solidity >=0.7.0 <0.9.0;
-pragma solidity ^0.4.17;
+pragma solidity >=0.7.0 <0.9.0;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
@@ -31,7 +30,7 @@ contract Campaign {
 
     address public manager;
     uint256 public BOGcount;
-    mapping(address => bool) boardOfGov;
+    mapping(address => bool) public boardOfGov;
     mapping(address => uint256) memberContributions;
 
     constructor(address creator) {
@@ -109,7 +108,7 @@ contract Campaign {
             request.value < address(this).balance,
             "Not enough funds on the contract"
         );
-        request.recipient.transfer(request.value);
+        payable(request.recipient).transfer(request.value);
         request.complete = true;
     }
 }
